@@ -13,9 +13,10 @@ const Navbar = () => {
           <li>Contact</li>
           <li>Cart</li>
 
-
+          <button className=' hover:bg-green-900'>light</button>
 
         </ul>
+      
       </div>
 
       
