@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Navbar from '../CustomComponents/Navbar'
 import Card from '../CustomComponents/Card'
+import Skeleton from '../CustomComponents/Skeleton';
 
 // const productlist = [
 //   {
@@ -247,6 +248,8 @@ import Card from '../CustomComponents/Card'
 
 const Home = () => {
 const [listOfProduct, setlistOfProduct] = useState([]);
+const [filterProduct, setFilterProduct]= useState([]);
+const [serachText, setSearchText] = useState("")
 
 useEffect(() => {
  fetchData();
@@ -257,20 +260,40 @@ const fetchData = async () => {
   const resData = await data.json();
   console.log(resData);
   setlistOfProduct(resData);
+  setFilterProduct(resData);
   
-}
+  }
+  
+
+//   if(listOfProduct.length === 0) {
+//     return <Skeleton />;
+  
+// }
 
 
 
 
-  return (
+
+   return listOfProduct.length === 0? <Skeleton />: (
     <>
+    <div className="mt-5 ml-6">
+      <input type="search" className='border border-black' onChange={(e)=>setSearchText(e.target.value)
+      }  value={serachText}/>
+      <button className='border border-black bg-blue-900 text-white rounded-md' onClick={()=>{
+      const  filteredData = listOfProduct.filter((product)=>{
+        return product.title.toLowerCase().includes(serachText.toLowerCase());
+        });
+        setFilterProduct(filteredData);
+        
+      }}>search</button>
+     
+    </div>
     <div className="ml-3 border border-black rounded-full mt-3 text-lg font-medium w-[8rem] text-center bg-gray-700 text-white">
       <button
         onClick={() => {
           const filteredProduct = product.filter(
             (product) => product.rating.rate >= 4);
-          setlistOfProduct(filteredProduct);
+          setFilterProduct(filteredProduct);
         }}
       >
         Top product
@@ -279,7 +302,7 @@ const fetchData = async () => {
     
     <div>
       <div className="w-full flex flex-wrap gap-4 p-2 mt-4">
-        {listOfProduct.map((product, index) => {
+        {filterProduct.map((product, index) => {
           return <Card key={product.id} product={product} />;
         })}
       </div>
