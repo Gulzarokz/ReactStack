@@ -1,15 +1,15 @@
 import { useState } from 'react'
+import Navbar from './Components/Navbar'
+import ProductCart from './Components/ProductCart'
 
-import Home from './Pages/Home'
-import Navbar from './CustomComponents/Navbar'
 
 function App() {
  
 
   return (
     <>
-    <Navbar />
-      <Home />
+   <Navbar />
+   <ProductCart />
     </>
   )
 }
